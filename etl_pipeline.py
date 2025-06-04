@@ -120,3 +120,11 @@ def load(dataframe: pd.DataFrame, file_path: str) -> None:
         dataframe.to_parquet(file_path, index=False)
     else:
         raise Exception(f"Warning: {file_path} is not a valid file type. Please try again!")
+    
+
+# Test scripts of the ETL pipeline functions
+raw_electricity_capability_df = extract_json_data("electricity_capability_nested.json")
+raw_electricity_sales_df = extract_tabular_data("electricity_sales.csv")
+cleaned_electricity_sales_df = transform_electricity_sales_data(raw_electricity_sales_df)
+load(raw_electricity_capability_df, "loaded__electricity_capability.parquet")
+load(cleaned_electricity_sales_df, "loaded__electricity_sales.csv")
